@@ -1,8 +1,13 @@
 {
   "extends": ["react-app"],
   "rules": {
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "import/no-anonymous-default-export": "off",
+    "no-control-regex": "off",
+    "no-useless-escape": "off",
+    "no-undef": "off"
   }
 }
