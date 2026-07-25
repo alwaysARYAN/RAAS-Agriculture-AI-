@@ -50,6 +50,32 @@ const Farms = () => {
     }
   };
 
+  const resetForm = () => {
+    setFormData({
+      farmName: '',
+      location: { state: '', district: '', village: '', pincode: '' },
+      area: '',
+      soil_type: 'Loamy',
+      irrigation_type: 'Drip',
+      water_source: 'Well'
+    });
+    setEditingFarm(null);
+    setShowForm(false);
+  };
+
+  const handleEdit = (farm) => {
+    setFormData({
+      farmName: farm.farmName,
+      location: farm.location,
+      area: farm.area,
+      soil_type: farm.soil_type,
+      irrigation_type: farm.irrigation_type,
+      water_source: farm.water_source
+    });
+    setEditingFarm(farm);
+    setShowForm(true);
+  };
+
   const handleExportPDF = () => {
     if (farms.length === 0) {
       alert(t('farms.noFarmsToExport'));
