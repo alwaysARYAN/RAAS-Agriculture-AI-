@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agriculture AI - Network Access</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .qr-container {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .url {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            font-weight: bold;
+            color: #1976d2;
+            margin: 20px 0;
+            word-break: break-all;
+        }
+        .instructions {
+            background: #f1f8e9;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            margin-top: 20px;
+        }
+        .instructions h3 {
+            color: #558b2f;
+            margin-top: 0;
+        }
+        .instructions ol {
+            color: #666;
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin: 10px 0;
+        }
+        .emoji {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .btn {
+            background: #4caf50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="emoji">🌾</div>
+        <h1>Agriculture AI</h1>
+        <p class="subtitle">Smart Farming & Decision Support System</p>
+        
+        <div class="qr-container">
+            <p style="color: #666; margin-bottom: 15px;">Scan this QR Code with your phone:</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=http://192.168.0.144:3002" 
+                 alt="QR Code" 
+                 style="max-width: 200px; border: 2px solid #ddd; padding: 10px; background: white;">
+        </div>
+        
+        <p style="color: #666; margin: 15px 0;">Or type this URL in your browser:</p>
+        <div class="url">192.168.0.144:3002</div>
+        
+        <a href="http://192.168.0.144:3002" class="btn" target="_blank">Open Agriculture AI</a>
+        
+        <div class="instructions">
+            <h3>📱 How to Access from Phone/Tablet:</h3>
+            <ol>
+                <li><strong>Connect to Wi-Fi</strong>: Make sure your phone is on the same Wi-Fi network</li>
+                <li><strong>Scan QR Code</strong>: Use your phone camera to scan the QR code above</li>
+                <li><strong>Or Type URL</strong>: Open browser and type the URL shown above</li>
+                <li><strong>Register/Login</strong>: Create account or login to access the app</li>
+                <li><strong>Test Languages</strong>: Switch between English, Hindi, and Gujarati!</li>
+            </ol>
+        </div>
+        
+        <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #999; font-size: 12px;">
+            <p>✅ Backend: Running on port 5001</p>
+            <p>✅ Frontend: Running on port 3002</p>
+            <p>✅ Firewall: Configured</p>
+            <p>✅ Translations: Complete (EN/HI/GU)</p>
+            <p style="margin-top: 15px;">Agriculture AI © 2026</p>
+        </div>
+    </div>
+</body>
+</html>

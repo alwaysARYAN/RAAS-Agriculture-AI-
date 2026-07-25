@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Authentication</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #22c55e;
+            border-bottom: 3px solid #22c55e;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 30px;
+            background: #22c55e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #16a34a;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .success {
+            background: #d1fae5;
+            border: 1px solid #22c55e;
+            color: #065f46;
+        }
+        .error {
+            background: #fee2e2;
+            border: 1px solid #ef4444;
+            color: #991b1b;
+        }
+        .info {
+            background: #dbeafe;
+            border: 1px solid #3b82f6;
+            color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Authentication Test Page</h1>
+        
+        <div class="form-group">
+            <label>API URL:</label>
+            <input type="text" id="apiUrl" value="http://localhost:5001/api">
+            <small>Backend API base URL</small>
+        </div>
+
+        <div class="form-group">
+            <label>Phone Number:</label>
+            <input type="tel" id="phone" placeholder="9876543210" value="9876543210">
+        </div>
+
+        <div class="form-group">
+            <label>Password:</label>
+            <input type="password" id="password" placeholder="Enter password" value="test123">
+        </div>
+
+        <div class="form-group">
+            <label>Name (for registration):</label>
+            <input type="text" id="name" placeholder="Your Name" value="Test User">
+        </div>
+
+        <div class="form-group">
+            <button onclick="testRegister()">📝 Test Registration</button>
+            <button onclick="testLogin()">🔐 Test Login</button>
+            <button onclick="testConnection()">🔍 Test Connection</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const showResult = (message, type = 'info') => {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = type;
+            resultDiv.textContent = message;
+        };
+
+        const testConnection = async () => {
+            const apiUrl = document.getElementById('apiUrl').value;
+            showResult('Testing connection to backend...', 'info');
+
+            try {
+                const response = await fetch(`${apiUrl}/auth/me`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (response.status === 401) {
+                    showResult(`✅ Connection successful!\n\nBackend is running and responding.\nResponse: ${JSON.stringify(data, null, 2)}`, 'success');
+                } else {
+                    showResult(`Response Status: ${response.status}\n\n${JSON.stringify(data, null, 2)}`, 'info');
+                }
+            } catch (error) {
+                showResult(`❌ Connection failed!\n\nError: ${error.message}\n\nMake sure:\n1. Backend is running on port 5001\n2. URL is correct: ${apiUrl}\n3. No firewall blocking the connection`, 'error');
+            }
+        };
+
+        const testRegister = async () => {
+            const apiUrl = document.getElementById('apiUrl').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
+
+            showResult('Registering user...', 'info');
+
+            try {
+                const response = await fetch(`${apiUrl}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phone,
+                        password,
+                        name,
+                        state: 'Test State',
+                        landSize: 5,
+                        soilType: 'Clay'
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showResult(`✅ Registration successful!\n\nUser: ${data.data.user.name}\nPhone: ${data.data.user.phone}\nToken: ${data.data.token.substring(0, 50)}...\n\nFull Response:\n${JSON.stringify(data, null, 2)}`, 'success');
+                } else {
+                    showResult(`❌ Registration failed!\n\nStatus: ${response.status}\nMessage: ${data.message}\n\nFull Response:\n${JSON.stringify(data, null, 2)}`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Request failed!\n\nError: ${error.message}\n\nMake sure backend is running on: ${apiUrl}`, 'error');
+            }
+        };
+
+        const testLogin = async () => {
+            const apiUrl = document.getElementById('apiUrl').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+
+            showResult('Logging in...', 'info');
+
+            try {
+                const response = await fetch(`${apiUrl}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        phone,
+                        password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showResult(`✅ Login successful!\n\nUser: ${data.data.user.name}\nPhone: ${data.data.user.phone}\nToken: ${data.data.token.substring(0, 50)}...\n\nFull Response:\n${JSON.stringify(data, null, 2)}`, 'success');
+                    
+                    // Store token for testing
+                    localStorage.setItem('testToken', data.data.token);
+                } else {
+                    showResult(`❌ Login failed!\n\nStatus: ${response.status}\nMessage: ${data.message}\n\nFull Response:\n${JSON.stringify(data, null, 2)}\n\nNote: If "Invalid credentials", the user may not exist. Try registration first.`, 'error');
+                }
+            } catch (error) {
+                showResult(`❌ Request failed!\n\nError: ${error.message}\n\nMake sure backend is running on: ${apiUrl}`, 'error');
+            }
+        };
+
+        // Test connection on page load
+        window.onload = () => {
+            testConnection();
+        };
+    </script>
+</body>
+</html>

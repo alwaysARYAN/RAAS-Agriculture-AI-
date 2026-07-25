@@ -1,0 +1,27 @@
+{
+  "name": "raas-agriculture-ai",
+  "version": "1.0.0",
+  "description": "RAAS - Roots AI Agriculture Solutions - Full Stack Smart Farming System",
+  "main": "server/server.js",
+  "scripts": {
+    "client": "cd client && npm start",
+    "server": "cd server && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "cd client && npm run build",
+    "install-all": "npm install && cd client && npm install && cd ../server && npm install",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "keywords": [
+    "agriculture",
+    "ai",
+    "farming",
+    "smart-farming",
+    "raas"
+  ],
+  "author": "RAAS Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

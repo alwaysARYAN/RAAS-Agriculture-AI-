@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2d5016">
+  <title>Offline - RAAS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+      background: linear-gradient(135deg, #faf8f3 0%, #f5f0e8 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .offline-container {
+      text-align: center;
+      max-width: 500px;
+      background: white;
+      padding: 60px 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(45, 80, 22, 0.1);
+    }
+
+    .offline-icon {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 30px;
+      background: linear-gradient(135deg, #2d5016 0%, #4a7c2c 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .offline-icon svg {
+      width: 60px;
+      height: 60px;
+      fill: white;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+    }
+
+    h1 {
+      color: #2d5016;
+      font-size: 32px;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    p {
+      color: #5a4a3a;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .features {
+      text-align: left;
+      margin: 30px 0;
+      padding: 20px;
+      background: #f8f6f0;
+      border-radius: 12px;
+      border-left: 4px solid #2d5016;
+    }
+
+    .features h3 {
+      color: #2d5016;
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .features ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .features li {
+      color: #5a4a3a;
+      font-size: 15px;
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .features li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #2d5016;
+      font-weight: bold;
+    }
+
+    .retry-button {
+      background: linear-gradient(135deg, #2d5016 0%, #4a7c2c 100%);
+      color: white;
+      border: none;
+      padding: 16px 48px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(45, 80, 22, 0.3);
+    }
+
+    .retry-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(45, 80, 22, 0.4);
+    }
+
+    .retry-button:active {
+      transform: translateY(0);
+    }
+
+    .connection-status {
+      margin-top: 24px;
+      padding: 12px;
+      background: #fff3cd;
+      border-radius: 8px;
+      color: #856404;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #856404;
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.3;
+      }
+    }
+
+    .online {
+      background: #d4edda !important;
+      color: #155724 !important;
+    }
+
+    .online .status-dot {
+      background: #155724 !important;
+      animation: none;
+    }
+
+    @media (max-width: 600px) {
+      .offline-container {
+        padding: 40px 24px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      .retry-button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-container">
+    <div class="offline-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+      </svg>
+    </div>
+    
+    <h1>You're Offline</h1>
+    <p>No internet connection detected. But don't worry, you can still access some RAAS features!</p>
+    
+    <div class="features">
+      <h3>Available Offline:</h3>
+      <ul>
+        <li>View cached farm and crop data</li>
+        <li>Access previously loaded weather forecasts</li>
+        <li>Review saved recommendations</li>
+        <li>Browse cached market prices</li>
+        <li>View your profile information</li>
+      </ul>
+    </div>
+    
+    <button class="retry-button" onclick="checkConnection()">
+      Try Again
+    </button>
+    
+    <div class="connection-status" id="status">
+      <span class="status-dot"></span>
+      <span>Checking connection...</span>
+    </div>
+  </div>
+
+  <script>
+    // Check connection on load
+    window.addEventListener('load', checkConnection);
+
+    // Listen for online event
+    window.addEventListener('online', () => {
+      updateStatus(true);
+      setTimeout(() => {
+        window.location.href = '/';
+      }, 1000);
+    });
+
+    // Listen for offline event
+    window.addEventListener('offline', () => {
+      updateStatus(false);
+    });
+
+    function checkConnection() {
+      const statusEl = document.getElementById('status');
+      statusEl.innerHTML = '<span class="status-dot"></span><span>Checking connection...</span>';
+      statusEl.classList.remove('online');
+
+      if (navigator.onLine) {
+        // Try to fetch a small resource to verify real connectivity
+        fetch('/', { method: 'HEAD', cache: 'no-cache' })
+          .then(() => {
+            updateStatus(true);
+            setTimeout(() => {
+              window.location.href = '/';
+            }, 1000);
+          })
+          .catch(() => {
+            updateStatus(false);
+          });
+      } else {
+        updateStatus(false);
+      }
+    }
+
+    function updateStatus(isOnline) {
+      const statusEl = document.getElementById('status');
+      
+      if (isOnline) {
+        statusEl.innerHTML = '<span class="status-dot"></span><span>Connected! Redirecting...</span>';
+        statusEl.classList.add('online');
+      } else {
+        statusEl.innerHTML = '<span class="status-dot"></span><span>Still offline. Please check your connection.</span>';
+        statusEl.classList.remove('online');
+      }
+    }
+
+    // Check connection every 30 seconds
+    setInterval(checkConnection, 30000);
+  </script>
+</body>
+</html>
