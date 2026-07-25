@@ -11,13 +11,13 @@ const API_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
 
 // Available models for v1beta endpoint (using correct stable versions)
 const MODELS = {
-  FLASH: 'gemini-1.5-flash',           // Gemini 1.5 Flash (stable)
-  FLASH_8B: 'gemini-1.5-flash-8b',     // Lighter 8B version
-  PRO: 'gemini-1.5-pro',               // Pro model
-  PRO_LATEST: 'gemini-pro-latest',     // Latest Pro model
+  FLASH: 'gemini-2.0-flash',           // Gemini 2.0 Flash (Works with Auth Keys)
+  FLASH_LATEST: 'gemini-flash-latest', // Auto-updates to latest
+  PRO: 'gemini-2.5-pro',               // Pro model
+  FLASH_LITE: 'gemini-2.0-flash-lite', // Lighter version
 };
 
-// Use Gemini 1.5 Flash (stable and widely available)
+// Use Gemini 2.0 Flash (compatible with Auth Keys)
 const DEFAULT_MODEL = MODELS.FLASH;
 
 // Configuration check
@@ -102,9 +102,11 @@ async function generateContent(prompt, modelName = DEFAULT_MODEL) {
 
   // Check key type and build URL accordingly
   const useAuthKey = isAuthKey(GEMINI_API_KEY);
+  
+  // Auth keys (AQ., SQ.) use X-Goog-Api-Key header, Standard keys use query param
   const url = useAuthKey 
-    ? `${API_BASE_URL}/models/${modelName}:generateContent` // Auth key - no query param
-    : `${API_BASE_URL}/models/${modelName}:generateContent?key=${GEMINI_API_KEY}`; // Standard key
+    ? `${API_BASE_URL}/models/${modelName}:generateContent`
+    : `${API_BASE_URL}/models/${modelName}:generateContent?key=${GEMINI_API_KEY}`;
 
   const requestBody = {
     contents: [{
@@ -138,16 +140,16 @@ async function generateContent(prompt, modelName = DEFAULT_MODEL) {
     ]
   };
 
-  // Build headers - Auth keys use Authorization header
+  // Build headers - Auth keys use X-Goog-Api-Key header (case-sensitive!)
   const headers = {
     'Content-Type': 'application/json'
   };
   
   if (useAuthKey) {
-    headers['Authorization'] = `Bearer ${GEMINI_API_KEY}`;
-    console.log('🔐 Using Auth Key (OAuth) authentication');
+    headers['X-Goog-Api-Key'] = GEMINI_API_KEY;
+    console.log('🔐 Using NEW Auth Key with X-Goog-Api-Key header');
   } else {
-    console.log('🔑 Using Standard API Key authentication');
+    console.log('🔑 Using Standard API Key (query parameter)');
   }
 
   try {
@@ -232,8 +234,8 @@ async function generateContentWithImage(prompt, imageBase64, mimeType = 'image/j
   // Check key type and build URL accordingly
   const useAuthKey = isAuthKey(GEMINI_API_KEY);
   const url = useAuthKey 
-    ? `${API_BASE_URL}/models/${DEFAULT_MODEL}:generateContent` // Auth key - no query param
-    : `${API_BASE_URL}/models/${DEFAULT_MODEL}:generateContent?key=${GEMINI_API_KEY}`; // Standard key
+    ? `${API_BASE_URL}/models/${DEFAULT_MODEL}:generateContent`
+    : `${API_BASE_URL}/models/${DEFAULT_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
   const requestBody = {
     contents: [{
@@ -258,14 +260,14 @@ async function generateContentWithImage(prompt, imageBase64, mimeType = 'image/j
   try {
     console.log(`🖼️ Calling Gemini Vision...`);
     
-    // Build headers - Auth keys use Authorization header
+    // Build headers - Auth keys use X-Goog-Api-Key header
     const headers = {
       'Content-Type': 'application/json'
     };
     
     if (useAuthKey) {
-      headers['Authorization'] = `Bearer ${GEMINI_API_KEY}`;
-      console.log('🔐 Using Auth Key (OAuth) for vision API');
+      headers['X-Goog-Api-Key'] = GEMINI_API_KEY;
+      console.log('🔐 Using Auth Key for vision API');
     }
     
     const response = await axiosInstance.post(url, requestBody, { headers });
