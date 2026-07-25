@@ -151,23 +151,32 @@ const Register = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
-                  👤 {t('auth.fullName')} *
+                <label style={{display: 'block', fontSize: '14px', fontWeight: 'bold', color: '#1F2937', marginBottom: '8px'}}>
+                  👤 Full Name *
                 </label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder={t('auth.fullName') || 'Full Name'}
+                  placeholder="Full Name"
                   required
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 placeholder-gray-500 font-medium"
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: '2px solid #D1D5DB',
+                    borderRadius: '12px',
+                    backgroundColor: '#FFFFFF',
+                    color: '#111827',
+                    fontSize: '16px',
+                    fontWeight: '500'
+                  }}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
-                  📱 {t('auth.phone')} *
+                <label style={{display: 'block', fontSize: '14px', fontWeight: 'bold', color: '#1F2937', marginBottom: '8px'}}>
+                  📱 Phone Number *
                 </label>
                 <input
                   type="tel"
@@ -177,15 +186,24 @@ const Register = () => {
                   placeholder="9876543210"
                   pattern="[0-9]{10}"
                   required
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 placeholder-gray-500 font-medium"
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: '2px solid #D1D5DB',
+                    borderRadius: '12px',
+                    backgroundColor: '#FFFFFF',
+                    color: '#111827',
+                    fontSize: '16px',
+                    fontWeight: '500'
+                  }}
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
-                  🔒 {t('auth.password')} *
+                <label style={{display: 'block', fontSize: '14px', fontWeight: 'bold', color: '#1F2937', marginBottom: '8px'}}>
+                  🔒 Password *
                 </label>
                 <input
                   type="password"
@@ -195,13 +213,22 @@ const Register = () => {
                   placeholder="••••••••"
                   required
                   minLength={6}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 font-medium"
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: '2px solid #D1D5DB',
+                    borderRadius: '12px',
+                    backgroundColor: '#FFFFFF',
+                    color: '#111827',
+                    fontSize: '16px',
+                    fontWeight: '500'
+                  }}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
-                  ✅ {t('auth.confirmPassword')} *
+                <label style={{display: 'block', fontSize: '14px', fontWeight: 'bold', color: '#1F2937', marginBottom: '8px'}}>
+                  ✅ Confirm Password *
                 </label>
                 <input
                   type="password"
@@ -210,14 +237,23 @@ const Register = () => {
                   onChange={handleChange}
                   placeholder="••••••••"
                   required
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 font-medium"
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: '2px solid #D1D5DB',
+                    borderRadius: '12px',
+                    backgroundColor: '#FFFFFF',
+                    color: '#111827',
+                    fontSize: '16px',
+                    fontWeight: '500'
+                  }}
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
-                📧 {t('auth.email')} <span className="text-xs text-gray-600">({t('common.optional') || 'optional'})</span>
+              <label style={{display: 'block', fontSize: '14px', fontWeight: 'bold', color: '#1F2937', marginBottom: '8px'}}>
+                📧 Email <span style={{fontSize: '12px', color: '#6B7280'}}>(optional)</span>
               </label>
               <input
                 type="email"
@@ -225,68 +261,104 @@ const Register = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="farmer@example.com"
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 placeholder-gray-500 font-medium"
+                style={{
+                  width: '100%',
+                  padding: '12px 16px',
+                  border: '2px solid #D1D5DB',
+                  borderRadius: '12px',
+                  backgroundColor: '#FFFFFF',
+                  color: '#111827',
+                  fontSize: '16px',
+                  fontWeight: '500'
+                }}
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
-                  📍 {t('auth.state')}
+                <label style={{display: 'block', fontSize: '14px', fontWeight: 'bold', color: '#1F2937', marginBottom: '8px'}}>
+                  📍 State
                 </label>
                 <select
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 cursor-pointer text-gray-900 font-medium appearance-none"
                   style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: '2px solid #D1D5DB',
+                    borderRadius: '12px',
+                    backgroundColor: '#FFFFFF',
+                    color: '#111827',
+                    fontSize: '16px',
+                    fontWeight: '500',
+                    cursor: 'pointer',
+                    appearance: 'none',
                     backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234B5563'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
                     backgroundRepeat: 'no-repeat',
-                    backgroundPosition: 'right 0.75rem center',
-                    backgroundSize: '1.5em 1.5em',
-                    paddingRight: '2.5rem'
+                    backgroundPosition: 'right 12px center',
+                    backgroundSize: '24px 24px',
+                    paddingRight: '40px'
                   }}
                 >
-                  <option value="" style={{color: '#6B7280'}}>Select State</option>
+                  <option value="">Select State</option>
                   {indianStates.map(state => (
-                    <option key={state} value={state} style={{color: '#111827'}}>{state}</option>
+                    <option key={state} value={state}>{state}</option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
-                  🏘️ {t('auth.district')}
+                <label style={{display: 'block', fontSize: '14px', fontWeight: 'bold', color: '#1F2937', marginBottom: '8px'}}>
+                  🏘️ District
                 </label>
                 <input
                   type="text"
                   name="district"
                   value={formData.district}
                   onChange={handleChange}
-                  placeholder={t('auth.district') || 'District'}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 placeholder-gray-500 font-medium"
+                  placeholder="District"
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: '2px solid #D1D5DB',
+                    borderRadius: '12px',
+                    backgroundColor: '#FFFFFF',
+                    color: '#111827',
+                    fontSize: '16px',
+                    fontWeight: '500'
+                  }}
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
-                  🏡 {t('auth.village')}
+                <label style={{display: 'block', fontSize: '14px', fontWeight: 'bold', color: '#1F2937', marginBottom: '8px'}}>
+                  🏡 Village
                 </label>
                 <input
                   type="text"
                   name="village"
                   value={formData.village}
                   onChange={handleChange}
-                  placeholder={t('auth.village') || 'Village'}
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 placeholder-gray-500 font-medium"
+                  placeholder="Village"
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: '2px solid #D1D5DB',
+                    borderRadius: '12px',
+                    backgroundColor: '#FFFFFF',
+                    color: '#111827',
+                    fontSize: '16px',
+                    fontWeight: '500'
+                  }}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
-                  📮 {t('auth.pincode')}
+                <label style={{display: 'block', fontSize: '14px', fontWeight: 'bold', color: '#1F2937', marginBottom: '8px'}}>
+                  📮 Pincode
                 </label>
                 <input
                   type="text"
@@ -295,7 +367,16 @@ const Register = () => {
                   onChange={handleChange}
                   placeholder="380001"
                   pattern="[0-9]{6}"
-                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 placeholder-gray-500 font-medium"
+                  style={{
+                    width: '100%',
+                    padding: '12px 16px',
+                    border: '2px solid #D1D5DB',
+                    borderRadius: '12px',
+                    backgroundColor: '#FFFFFF',
+                    color: '#111827',
+                    fontSize: '16px',
+                    fontWeight: '500'
+                  }}
                 />
               </div>
             </div>
