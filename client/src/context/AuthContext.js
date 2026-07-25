@@ -41,9 +41,18 @@ export const AuthProvider = ({ children }) => {
       const response = await api.post('/auth/register', userData);
       const { token: newToken, user: newUser } = response.data.data;
       
+      // Clear old data first
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      
+      // Set new data
+      localStorage.setItem('token', newToken);
+      localStorage.setItem('user', JSON.stringify(newUser));
       setToken(newToken);
       setUser(newUser);
-      localStorage.setItem('token', newToken);
+      
+      // Update API default headers
+      api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
       
       return { success: true, data: response.data };
     } catch (error) {
@@ -60,9 +69,18 @@ export const AuthProvider = ({ children }) => {
       const response = await api.post('/auth/login', { phone, password });
       const { token: newToken, user: newUser } = response.data.data;
       
+      // Clear old data first
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      
+      // Set new data
+      localStorage.setItem('token', newToken);
+      localStorage.setItem('user', JSON.stringify(newUser));
       setToken(newToken);
       setUser(newUser);
-      localStorage.setItem('token', newToken);
+      
+      // Update API default headers
+      api.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
       
       return { success: true, data: response.data };
     } catch (error) {
@@ -78,6 +96,8 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setToken(null);
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    delete api.defaults.headers.common['Authorization'];
   };
 
   const updateProfile = async (userData) => {
