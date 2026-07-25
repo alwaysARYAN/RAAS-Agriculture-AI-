@@ -2,14 +2,16 @@ const mongoose = require('mongoose');
 
 const connectDatabase = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI);
+    const conn = await mongoose.connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 5000 // 5 second timeout
+    });
 
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     console.log(`📊 Database Name: ${conn.connection.name}`);
 
     // Handle connection events
     mongoose.connection.on('error', (err) => {
-      console.error('❌ MongoDB connection error:', err);
+      console.error('❌ MongoDB connection error:', err.message);
     });
 
     mongoose.connection.on('disconnected', () => {
@@ -29,7 +31,10 @@ const connectDatabase = async () => {
 
   } catch (error) {
     console.error('❌ MongoDB connection failed:', error.message);
-    process.exit(1);
+    console.error('⚠️  Server will continue but database features may not work');
+    console.error('💡 Check: 1) MongoDB URI is correct 2) IP is whitelisted 3) Network access');
+    // DON'T crash the server - let it run without DB for health checks
+    // process.exit(1); // Removed to prevent server crash
   }
 };
 

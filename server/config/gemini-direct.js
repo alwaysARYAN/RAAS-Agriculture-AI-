@@ -20,6 +20,14 @@ const MODELS = {
 // Use Gemini 1.5 Flash (stable and widely available)
 const DEFAULT_MODEL = MODELS.FLASH;
 
+// Configuration check
+if (!GEMINI_API_KEY || GEMINI_API_KEY.trim() === '') {
+  console.error('⚠️  WARNING: GEMINI_API_KEY not configured!');
+  console.error('   AI features will be disabled until API key is set.');
+} else {
+  console.log('✅ Gemini API key found:', GEMINI_API_KEY.substring(0, 10) + '...');
+}
+
 // Rate limiting tracker with longer intervals
 const rateLimiter = {
   requestCount: 0,
@@ -70,7 +78,16 @@ const axiosInstance = axios.create({
 });
 
 /**
+ * Detect if API key is Auth Key (OAuth) or Standard Key
+ * Auth keys start with: AQ., SQ., while Standard keys start with: AIzaSy
+ */
+function isAuthKey(apiKey) {
+  return apiKey && (apiKey.startsWith('AQ.') || apiKey.startsWith('SQ.'));
+}
+
+/**
  * Generate content using Gemini API
+ * Supports both Auth Keys (OAuth) and Standard API Keys
  * @param {string} prompt - The text prompt
  * @param {string} modelName - Model name to use
  * @returns {Promise<string>} Generated text
@@ -83,7 +100,11 @@ async function generateContent(prompt, modelName = DEFAULT_MODEL) {
   // Wait if rate limit reached
   await rateLimiter.canMakeRequest();
 
-  const url = `${API_BASE_URL}/models/${modelName}:generateContent`;
+  // Check key type and build URL accordingly
+  const useAuthKey = isAuthKey(GEMINI_API_KEY);
+  const url = useAuthKey 
+    ? `${API_BASE_URL}/models/${modelName}:generateContent` // Auth key - no query param
+    : `${API_BASE_URL}/models/${modelName}:generateContent?key=${GEMINI_API_KEY}`; // Standard key
 
   const requestBody = {
     contents: [{
@@ -117,18 +138,22 @@ async function generateContent(prompt, modelName = DEFAULT_MODEL) {
     ]
   };
 
-  // Prepare headers - try both authorization methods
+  // Build headers - Auth keys use Authorization header
   const headers = {
     'Content-Type': 'application/json'
   };
-
-  // Try as query parameter (works for both key formats)
-  const urlWithKey = `${url}?key=${GEMINI_API_KEY}`;
+  
+  if (useAuthKey) {
+    headers['Authorization'] = `Bearer ${GEMINI_API_KEY}`;
+    console.log('🔐 Using Auth Key (OAuth) authentication');
+  } else {
+    console.log('🔑 Using Standard API Key authentication');
+  }
 
   try {
     console.log(`🤖 Calling Gemini ${modelName}...`);
     
-    const response = await axiosInstance.post(urlWithKey, requestBody, { headers });
+    const response = await axiosInstance.post(url, requestBody, { headers });
 
     if (response.data && response.data.candidates && response.data.candidates[0]) {
       const candidate = response.data.candidates[0];
@@ -167,6 +192,12 @@ async function generateContent(prompt, modelName = DEFAULT_MODEL) {
         console.error('   2. API is enabled in Google Cloud');
         console.error('   3. Billing is set up (for higher quota)');
         throw new Error('ACCESS_DENIED');
+      } else if (status === 401) {
+        console.error('💡 AUTHENTICATION FAILED - Solutions:');
+        console.error('   1. Check API key is correct');
+        console.error('   2. Auth keys need Bearer token authorization');
+        console.error('   3. Standard keys need ?key= parameter');
+        throw new Error('AUTHENTICATION_FAILED');
       } else if (status === 404) {
         console.error('💡 MODEL NOT FOUND - Trying alternative model...');
         // Try flash model as fallback
@@ -189,6 +220,7 @@ async function generateContent(prompt, modelName = DEFAULT_MODEL) {
 
 /**
  * Generate content with vision (image + text)
+ * Supports both Auth Keys (OAuth) and Standard API Keys
  */
 async function generateContentWithImage(prompt, imageBase64, mimeType = 'image/jpeg') {
   if (!GEMINI_API_KEY || GEMINI_API_KEY.trim() === '') {
@@ -197,7 +229,11 @@ async function generateContentWithImage(prompt, imageBase64, mimeType = 'image/j
 
   await rateLimiter.canMakeRequest();
 
-  const url = `${API_BASE_URL}/models/${DEFAULT_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+  // Check key type and build URL accordingly
+  const useAuthKey = isAuthKey(GEMINI_API_KEY);
+  const url = useAuthKey 
+    ? `${API_BASE_URL}/models/${DEFAULT_MODEL}:generateContent` // Auth key - no query param
+    : `${API_BASE_URL}/models/${DEFAULT_MODEL}:generateContent?key=${GEMINI_API_KEY}`; // Standard key
 
   const requestBody = {
     contents: [{
@@ -222,9 +258,17 @@ async function generateContentWithImage(prompt, imageBase64, mimeType = 'image/j
   try {
     console.log(`🖼️ Calling Gemini Vision...`);
     
-    const response = await axiosInstance.post(url, requestBody, {
-      headers: { 'Content-Type': 'application/json' }
-    });
+    // Build headers - Auth keys use Authorization header
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+    
+    if (useAuthKey) {
+      headers['Authorization'] = `Bearer ${GEMINI_API_KEY}`;
+      console.log('🔐 Using Auth Key (OAuth) for vision API');
+    }
+    
+    const response = await axiosInstance.post(url, requestBody, { headers });
 
     if (response.data && response.data.candidates && response.data.candidates[0]) {
       const candidate = response.data.candidates[0];
@@ -239,9 +283,10 @@ async function generateContentWithImage(prompt, imageBase64, mimeType = 'image/j
   } catch (error) {
     if (error.response) {
       const status = error.response.status;
-      console.error(`❌ Gemini Vision Error (${status})`);
+      console.error(`❌ Gemini Vision Error (${status}):`, error.response.data?.error?.message || 'Unknown error');
       if (status === 429) throw new Error('QUOTA_EXCEEDED');
       if (status === 400) throw new Error('INVALID_REQUEST');
+      if (status === 401) throw new Error('AUTHENTICATION_FAILED');
       if (status === 403) throw new Error('ACCESS_DENIED');
       throw new Error(`API_ERROR_${status}`);
     }
@@ -254,8 +299,13 @@ async function generateContentWithImage(prompt, imageBase64, mimeType = 'image/j
  */
 async function testConnection() {
   try {
+    if (!GEMINI_API_KEY || GEMINI_API_KEY.trim() === '') {
+      console.log('⚠️  Gemini API key not configured - skipping test');
+      return false;
+    }
+    
     console.log(`🧪 Testing Gemini API connection...`);
-    console.log('📋 API Key format:', GEMINI_API_KEY ? GEMINI_API_KEY.substring(0, 10) + '...' : 'NOT SET');
+    console.log('📋 API Key format:', GEMINI_API_KEY.substring(0, 10) + '...');
     console.log('📋 API Endpoint:', API_BASE_URL);
     console.log('📋 Model:', DEFAULT_MODEL);
     
@@ -265,6 +315,7 @@ async function testConnection() {
     return true;
   } catch (error) {
     console.error('❌ Gemini API test FAILED:', error.message);
+    console.error('   AI features will work but may have reduced functionality');
     return false;
   }
 }
