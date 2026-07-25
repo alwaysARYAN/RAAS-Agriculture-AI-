@@ -154,31 +154,37 @@ app.use((req, res) => {
 // Error handler middleware (must be last)
 app.use(errorHandler);
 
-// Start server
-const PORT = process.env.PORT || 5000;
-const HOST = '0.0.0.0'; // Listen on all network interfaces
-server.listen(PORT, HOST, () => {
-  console.log('🌾 ========================================');
-  console.log('🚀 Agriculture AI Server Started');
-  console.log(`📡 Server running on port ${PORT}`);
-  console.log(`🌐 Network access: http://192.168.0.119:${PORT}`);
-  console.log(`🏠 Local access: http://localhost:${PORT}`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
-  console.log('🔔 Socket.IO enabled for real-time notifications');
-  console.log('🌾 ========================================');
-});
+// For Vercel serverless deployment
+if (process.env.VERCEL) {
+  // Export app for Vercel serverless
+  module.exports = app;
+} else {
+  // Start server for local development
+  const PORT = process.env.PORT || 5000;
+  const HOST = '0.0.0.0'; // Listen on all network interfaces
+  server.listen(PORT, HOST, () => {
+    console.log('🌾 ========================================');
+    console.log('🚀 Agriculture AI Server Started');
+    console.log(`📡 Server running on port ${PORT}`);
+    console.log(`🌐 Network access: http://192.168.0.119:${PORT}`);
+    console.log(`🏠 Local access: http://localhost:${PORT}`);
+    console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log('🔔 Socket.IO enabled for real-time notifications');
+    console.log('🌾 ========================================');
+  });
 
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err) => {
-  console.error('❌ Unhandled Promise Rejection:', err.message);
-  // Close server & exit process
-  server.close(() => process.exit(1));
-});
+  // Handle unhandled promise rejections
+  process.on('unhandledRejection', (err) => {
+    console.error('❌ Unhandled Promise Rejection:', err.message);
+    // Close server & exit process
+    server.close(() => process.exit(1));
+  });
 
-// Handle uncaught exceptions
-process.on('uncaughtException', (err) => {
-  console.error('❌ Uncaught Exception:', err.message);
-  process.exit(1);
-});
+  // Handle uncaught exceptions
+  process.on('uncaughtException', (err) => {
+    console.error('❌ Uncaught Exception:', err.message);
+    process.exit(1);
+  });
+}
 
 module.exports = app;
