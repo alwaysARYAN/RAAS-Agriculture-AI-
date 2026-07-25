@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
+const dns = require('dns');
+
+// Force Node.js to use Google DNS for MongoDB Atlas resolution
+dns.setServers(['8.8.8.8', '8.8.4.4', '1.1.1.1']);
 
 const connectDatabase = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
-      serverSelectionTimeoutMS: 5000 // 5 second timeout
+      serverSelectionTimeoutMS: 10000, // 10 second timeout
+      family: 4 // Use IPv4
     });
 
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
