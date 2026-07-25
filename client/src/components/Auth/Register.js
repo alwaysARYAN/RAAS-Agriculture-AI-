@@ -151,20 +151,24 @@ const Register = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.fullName')} *</label>
+                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+                  👤 {t('auth.fullName')} *
+                </label>
                 <input
                   type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder={t('auth.fullName')}
+                  placeholder={t('auth.fullName') || 'Full Name'}
                   required
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 placeholder-gray-500 font-medium"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.phone')} *</label>
+                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+                  📱 {t('auth.phone')} *
+                </label>
                 <input
                   type="tel"
                   name="phone"
@@ -173,14 +177,16 @@ const Register = () => {
                   placeholder="9876543210"
                   pattern="[0-9]{10}"
                   required
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 placeholder-gray-500 font-medium"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.password')} *</label>
+                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+                  🔒 {t('auth.password')} *
+                </label>
                 <input
                   type="password"
                   name="password"
@@ -189,12 +195,14 @@ const Register = () => {
                   placeholder="••••••••"
                   required
                   minLength={6}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 font-medium"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.confirmPassword')} *</label>
+                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+                  ✅ {t('auth.confirmPassword')} *
+                </label>
                 <input
                   type="password"
                   name="confirmPassword"
@@ -202,67 +210,84 @@ const Register = () => {
                   onChange={handleChange}
                   placeholder="••••••••"
                   required
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 font-medium"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.email')} ({t('common.optional') || 'optional'})</label>
+              <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+                📧 {t('auth.email')} <span className="text-xs text-gray-600">({t('common.optional') || 'optional'})</span>
+              </label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="farmer@example.com"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-900 placeholder-gray-500"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 placeholder-gray-500 font-medium"
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.state')}</label>
+                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+                  📍 {t('auth.state')}
+                </label>
                 <select
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 cursor-pointer text-gray-900"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 cursor-pointer text-gray-900 font-medium appearance-none"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%234B5563'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'right 0.75rem center',
+                    backgroundSize: '1.5em 1.5em',
+                    paddingRight: '2.5rem'
+                  }}
                 >
-                  <option value="">{t('auth.state')}</option>
+                  <option value="" style={{color: '#6B7280'}}>Select State</option>
                   {indianStates.map(state => (
-                    <option key={state} value={state}>{state}</option>
+                    <option key={state} value={state} style={{color: '#111827'}}>{state}</option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.district')}</label>
+                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+                  🏘️ {t('auth.district')}
+                </label>
                 <input
                   type="text"
                   name="district"
                   value={formData.district}
                   onChange={handleChange}
-                  placeholder={t('auth.district')}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
+                  placeholder={t('auth.district') || 'District'}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 placeholder-gray-500 font-medium"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.village')}</label>
+                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+                  🏡 {t('auth.village')}
+                </label>
                 <input
                   type="text"
                   name="village"
                   value={formData.village}
                   onChange={handleChange}
-                  placeholder={t('auth.village')}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
+                  placeholder={t('auth.village') || 'Village'}
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 placeholder-gray-500 font-medium"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.pincode')}</label>
+                <label className="block text-sm font-bold text-gray-800 mb-2 flex items-center gap-2">
+                  📮 {t('auth.pincode')}
+                </label>
                 <input
                   type="text"
                   name="pincode"
@@ -270,7 +295,7 @@ const Register = () => {
                   onChange={handleChange}
                   placeholder="380001"
                   pattern="[0-9]{6}"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
+                  className="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white hover:border-green-400 text-gray-900 placeholder-gray-500 font-medium"
                 />
               </div>
             </div>
