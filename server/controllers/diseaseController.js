@@ -150,7 +150,7 @@ Provide accurate, practical advice for farmers. If the plant appears healthy, in
         affected_area: diseaseData.affected_area || 'Leaves',
         ai_analysis: {
           raw_response: analysisText,
-          model_used: 'gemini-2.5-flash',
+          model_used: 'gemini-1.5-flash',
           analysis_timestamp: new Date()
         }
       });

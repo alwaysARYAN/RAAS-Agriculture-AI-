@@ -9,15 +9,15 @@ const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 // Always use v1beta endpoint (works for both key formats)
 const API_BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
 
-// Available models for v1beta endpoint (using latest stable versions)
+// Available models for v1beta endpoint (using correct stable versions)
 const MODELS = {
-  FLASH: 'gemini-3.6-flash',           // Latest Gemini 3.6 Flash
-  FLASH_LITE: 'gemini-3.5-flash-lite', // Lighter version
-  FLASH_35: 'gemini-3.5-flash',        // Gemini 3.5 Flash
+  FLASH: 'gemini-1.5-flash',           // Gemini 1.5 Flash (stable)
+  FLASH_8B: 'gemini-1.5-flash-8b',     // Lighter 8B version
+  PRO: 'gemini-1.5-pro',               // Pro model
   PRO_LATEST: 'gemini-pro-latest',     // Latest Pro model
 };
 
-// Use Gemini 3.6 Flash (latest available)
+// Use Gemini 1.5 Flash (stable and widely available)
 const DEFAULT_MODEL = MODELS.FLASH;
 
 // Rate limiting tracker with longer intervals
