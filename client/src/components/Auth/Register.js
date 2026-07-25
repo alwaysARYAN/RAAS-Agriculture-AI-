@@ -159,7 +159,7 @@ const Register = () => {
                   onChange={handleChange}
                   placeholder={t('auth.fullName')}
                   required
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
                 />
               </div>
 
@@ -173,7 +173,7 @@ const Register = () => {
                   placeholder="9876543210"
                   pattern="[0-9]{10}"
                   required
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
                 />
               </div>
             </div>
@@ -189,7 +189,7 @@ const Register = () => {
                   placeholder="••••••••"
                   required
                   minLength={6}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
                 />
               </div>
 
@@ -202,7 +202,7 @@ const Register = () => {
                   onChange={handleChange}
                   placeholder="••••••••"
                   required
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
                 />
               </div>
             </div>
@@ -215,7 +215,7 @@ const Register = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="farmer@example.com"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition text-gray-900 placeholder-gray-500"
               />
             </div>
 
@@ -243,7 +243,7 @@ const Register = () => {
                   value={formData.district}
                   onChange={handleChange}
                   placeholder={t('auth.district')}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
                 />
               </div>
             </div>
@@ -257,7 +257,7 @@ const Register = () => {
                   value={formData.village}
                   onChange={handleChange}
                   placeholder={t('auth.village')}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
                 />
               </div>
 
@@ -270,7 +270,7 @@ const Register = () => {
                   onChange={handleChange}
                   placeholder="380001"
                   pattern="[0-9]{6}"
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white/80 backdrop-blur-sm hover:border-green-300 text-gray-900 placeholder-gray-500"
                 />
               </div>
             </div>
