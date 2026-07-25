@@ -75,10 +75,14 @@ const Register = () => {
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-8 relative overflow-hidden"
          style={{
-           background: 'linear-gradient(135deg, #87CEEB 0%, #98D8E8 30%, #B8E6B8 60%, #F4E4C1 100%)',
+           backgroundImage: 'url(/farm-bg.jpg)',
            backgroundSize: 'cover',
-           backgroundPosition: 'center'
+           backgroundPosition: 'center',
+           backgroundRepeat: 'no-repeat'
          }}>
+      {/* Overlay for better visibility */}
+      <div className="absolute inset-0 bg-gradient-to-br from-green-900/40 via-transparent to-yellow-900/30"></div>
+      
       {/* Animated Farming Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Floating Crops */}

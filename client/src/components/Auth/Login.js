@@ -47,10 +47,14 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
          style={{
-           background: 'linear-gradient(135deg, #87CEEB 0%, #98D8E8 50%, #F4E4C1 100%)',
+           backgroundImage: 'url(/farm-bg.jpg)',
            backgroundSize: 'cover',
-           backgroundPosition: 'center'
+           backgroundPosition: 'center',
+           backgroundRepeat: 'no-repeat'
          }}>
+      {/* Overlay for better text visibility */}
+      <div className="absolute inset-0 bg-gradient-to-br from-green-900/30 via-transparent to-yellow-900/20"></div>
+      
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {/* Floating Wheat */}
