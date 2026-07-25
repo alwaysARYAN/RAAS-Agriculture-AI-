@@ -402,6 +402,8 @@
     "email": "Email Address",
     "district": "District",
     "village": "Village",
-    "pincode": "Pincode"
+    "pincode": "Pincode",
+    "loggingIn": "Logging in...",
+    "registering": "Creating account..."
   }
 }

@@ -402,6 +402,8 @@
     "email": "ईमेल पता",
     "district": "जिला",
     "village": "गांव",
-    "pincode": "पिन कोड"
+    "pincode": "पिन कोड",
+    "loggingIn": "लॉगिन हो रहा है...",
+    "registering": "खाता बनाया जा रहा है..."
   }
 }
