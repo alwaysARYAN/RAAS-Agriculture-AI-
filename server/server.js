@@ -138,6 +138,7 @@ app.get('/health', (req, res) => {
 app.get('/api/check-env', (req, res) => {
   res.status(200).json({
     success: true,
+    timestamp: new Date().toISOString(),
     environment: {
       NODE_ENV: process.env.NODE_ENV,
       hasGeminiKey: !!process.env.GEMINI_API_KEY,
@@ -150,6 +151,31 @@ app.get('/api/check-env', (req, res) => {
       isVercel: !!process.env.VERCEL
     }
   });
+});
+
+// Simple Gemini test endpoint (no auth needed)
+app.get('/test-gemini', async (req, res) => {
+  try {
+    const { getGeminiProModel } = require('./config/gemini');
+    const model = getGeminiProModel();
+    const result = await model.generateContent('Say "Hello from Gemini!" if you are working.');
+    const response = await result.response;
+    const text = response.text();
+    
+    res.status(200).json({
+      success: true,
+      message: 'Gemini API is working!',
+      geminiResponse: text,
+      hasApiKey: !!process.env.GEMINI_API_KEY
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Gemini API test failed',
+      error: error.message,
+      hasApiKey: !!process.env.GEMINI_API_KEY
+    });
+  }
 });
 
 // API Routes
