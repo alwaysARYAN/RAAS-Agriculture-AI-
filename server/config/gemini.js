@@ -7,10 +7,12 @@ try {
   
   if (!apiKey) {
     console.error('❌ GEMINI_API_KEY not found in environment variables');
-  } else if (!apiKey.startsWith('AIzaSy')) {
-    console.warn('⚠️  WARNING: Gemini API key format may be incorrect. Keys should start with "AIzaSy"');
+  } else if (!apiKey.startsWith('AIzaSy') && !apiKey.startsWith('AQ.')) {
+    console.warn('⚠️  WARNING: Gemini API key format may be incorrect.');
+    console.warn('⚠️  Keys should start with "AIzaSy" or "AQ."');
     console.warn('⚠️  Current key starts with:', apiKey.substring(0, 5));
-    console.warn('⚠️  Get a valid key from: https://makersuite.google.com/app/apikey');
+  } else {
+    console.log('✅ Gemini API key format validated:', apiKey.substring(0, 5) + '...');
   }
   
   genAI = new GoogleGenerativeAI(apiKey);

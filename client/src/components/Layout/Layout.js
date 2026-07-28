@@ -15,7 +15,10 @@ const Layout = ({ children }) => {
 
   const handleLogout = () => {
     logout();
-    disconnectSocket();
+    // Only disconnect socket in development
+    if (process.env.NODE_ENV !== 'production') {
+      disconnectSocket();
+    }
     navigate('/login');
   };
 
@@ -34,12 +37,15 @@ const Layout = ({ children }) => {
   ];
 
   useEffect(() => {
-    if (user?._id) {
+    // Socket disabled in production - using REST API only
+    if (process.env.NODE_ENV !== 'production' && user?._id) {
       initializeSocket(user._id);
     }
     
     return () => {
-      disconnectSocket();
+      if (process.env.NODE_ENV !== 'production') {
+        disconnectSocket();
+      }
     };
   }, [user]);
 

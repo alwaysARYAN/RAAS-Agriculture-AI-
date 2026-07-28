@@ -12,33 +12,35 @@ const NotificationBell = () => {
     fetchNotifications();
     fetchUnreadCount();
 
-    // Listen for real-time notifications
-    const socket = getSocket();
-    if (socket) {
-      socket.on('notification', (notification) => {
-        setNotifications(prev => [notification, ...prev]);
-        setUnreadCount(prev => prev + 1);
-        
-        // Show browser notification if permitted
-        if (Notification.permission === 'granted') {
-          new Notification(notification.title, {
-            body: notification.message,
-            icon: '/logo192.png'
-          });
+    // Listen for real-time notifications (only in development)
+    if (process.env.NODE_ENV !== 'production') {
+      const socket = getSocket();
+      if (socket) {
+        socket.on('notification', (notification) => {
+          setNotifications(prev => [notification, ...prev]);
+          setUnreadCount(prev => prev + 1);
+          
+          // Show browser notification if permitted
+          if (Notification.permission === 'granted') {
+            new Notification(notification.title, {
+              body: notification.message,
+              icon: '/logo192.png'
+            });
+          }
+        });
+      }
+
+      return () => {
+        if (socket) {
+          socket.off('notification');
         }
-      });
+      };
     }
 
     // Request notification permission
     if (Notification.permission === 'default') {
       Notification.requestPermission();
     }
-
-    return () => {
-      if (socket) {
-        socket.off('notification');
-      }
-    };
   }, []);
 
   const fetchNotifications = async () => {
