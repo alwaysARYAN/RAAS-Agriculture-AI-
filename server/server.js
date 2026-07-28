@@ -134,6 +134,24 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Environment check route (for debugging - remove after fixing)
+app.get('/api/check-env', (req, res) => {
+  res.status(200).json({
+    success: true,
+    environment: {
+      NODE_ENV: process.env.NODE_ENV,
+      hasGeminiKey: !!process.env.GEMINI_API_KEY,
+      geminiKeyPrefix: process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.substring(0, 5) + '...' : 'NOT SET',
+      geminiKeyLength: process.env.GEMINI_API_KEY ? process.env.GEMINI_API_KEY.length : 0,
+      hasMongoDB: !!process.env.MONGODB_URI,
+      hasJWT: !!process.env.JWT_SECRET,
+      hasCloudinary: !!process.env.CLOUDINARY_CLOUD_NAME,
+      hasOpenWeather: !!process.env.OPENWEATHER_API_KEY,
+      isVercel: !!process.env.VERCEL
+    }
+  });
+});
+
 // API Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/farms', require('./routes/farmRoutes'));
